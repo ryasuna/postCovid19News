@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  python:
+    build: .
+    volumes:
+      - ./src:/usr/src/pythonwork
+    tty: true
+    working_dir: /usr/src/pythonwork
