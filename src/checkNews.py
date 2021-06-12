@@ -4,11 +4,12 @@ from requests_html import HTMLSession
 import slackweb
 import re
 
-url = "https://news.yahoo.co.jp/pages/article/covid19tokyo"
+news_url = "https://news.yahoo.co.jp/pages/article/covid19tokyo"
+slackweb_url = "https://hooks.slack.com/services/xxxxxxxxxxxxxxxxxxxxx"
 
 # セッション開始
 session = HTMLSession()
-r = session.get(url)
+r = session.get(news_url)
 
 # HTMLを生成
 r.html.render()
@@ -21,5 +22,5 @@ for num in range(1, 4):
     article_url = article_link.absolute_links
 
     # slackへ投稿
-    slack = slackweb.Slack(url="https://hooks.slack.com/services/xxxxxxxxxxxxx")
+    slack = slackweb.Slack(url=slackweb_url)
     slack.notify(text=article_title_text + '\n' + re.sub("\{|\}|'", "", str(article_url)), channel="#general", username="covid19-news-bot", icon_emoji=":eyes:", mrkdwn=True)
